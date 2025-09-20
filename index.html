@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mars Rover Photo Search</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-rocket"></i>
+                    <h1>Mars Rover Explorer</h1>
+                </div>
+                <p class="subtitle">Explora las increíbles fotografías tomadas por los rovers en Marte</p>
+            </div>
+        </div>
+    </header>
+
+    <section class="search-section">
+        <div class="container">
+            <div class="search-form">
+                
+                <form id="searchForm" class="form-grid">
+                    <div class="form-group">
+                        <label for="rover">
+                            <i class="fas fa-robot"></i> Rover
+                        </label>
+                        <select id="rover" name="rover" required>
+                            <option value="">Selecciona un rover</option>
+                            <option value="curiosity">Curiosity</option>
+                            <option value="opportunity">Opportunity</option>
+                            <option value="spirit">Spirit</option>
+                            <option value="perseverance">Perseverance</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="earth_date">
+                            <i class="fas fa-calendar"></i> Fecha
+                        </label>
+                        <input type="date" id="earth_date" name="earth_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="camera">
+                            <i class="fas fa-camera"></i> Cámara
+                        </label>
+                        <select id="camera" name="camera">
+                            <option value="">Todas las cámaras</option>
+                            <option value="FHAZ">Front Hazard Avoidance Camera</option>
+                            <option value="RHAZ">Rear Hazard Avoidance Camera</option>
+                            <option value="MAST">Mast Camera</option>
+                            <option value="CHEMCAM">Chemistry and Camera Complex</option>
+                            <option value="MAHLI">Mars Hand Lens Imager</option>
+                            <option value="MARDI">Mars Descent Imager</option>
+                            <option value="NAVCAM">Navigation Camera</option>
+                            <option value="PANCAM">Panoramic Camera</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i>
+                            Buscar Fotografías
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="results-section" id="results-section">
+        <div class="container">
+            <div id="loading" class="loading hidden">
+                <div class="loading-spinner"></div>
+                <p>Buscando fotografías en Marte...</p>
+            </div>
+
+            <div id="results-info" class="results-info hidden">
+                <h3>
+                    <i class="fas fa-images"></i>
+                    <span id="results-count">0</span> fotografías encontradas
+                </h3>
+                <div class="results-filters">
+                    <span id="active-filters"></span>
+                </div>
+            </div>
+
+            <div id="error-message" class="error-message hidden">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>No se encontraron fotografías con los filtros seleccionados. Prueba con otros criterios de búsqueda.</p>
+            </div>
+
+            <div id="photo-grid" class="photo-grid">
+            </div>
+
+            <div id="load-more-container" class="load-more-container hidden">
+                <button id="load-more-btn" class="load-more-btn">
+                    <i class="fas fa-plus"></i>
+                    Cargar más fotografías
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div id="photo-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+                <img id="modal-image" src="" alt="">
+                <div class="modal-info">
+                    <h3 id="modal-title"></h3>
+                    <div class="modal-details">
+                        <div class="detail-item">
+                            <i class="fas fa-robot"></i>
+                            <span><strong>Rover:</strong> <span id="modal-rover"></span></span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span><strong>Fecha:</strong> <span id="modal-date"></span></span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-camera"></i>
+                            <span><strong>Cámara:</strong> <span id="modal-camera"></span></span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-hashtag"></i>
+                            <span><strong>ID:</strong> <span id="modal-id"></span></span>
+                        </div>
+                    </div>
+                    <a id="modal-original" href="" target="_blank" class="view-original-btn">
+                        <i class="fas fa-external-link-alt"></i>
+                        Ver imagen original
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer minimalista -->
+    <footer class="footer">
+        <div class="container">
+            <a href="https://api.nasa.gov/" target="_blank">
+                Powered by NASA Mars Rover Photos API
+            </a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
