@@ -37,7 +37,6 @@ class MarsRoverAPI {
             }
             
             const data = await response.json();
-			console.log(data);
             return data.photos;
         } catch (error) {
             console.error('Error getting photos:', error);
@@ -94,5 +93,9 @@ const Utils = {
         const maxDate = rover.status === 'active' ? new Date() : new Date(rover.max_date);
         
         return inputDate >= landingDate && inputDate <= maxDate;
+    }, 
+     
+    getTodayDate() {
+        return new Date().toISOString().split('T')[0];
     }
 };

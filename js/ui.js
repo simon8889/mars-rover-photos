@@ -56,11 +56,23 @@ class UIManager {
         }
     }
     
+    updateDateConstraints(roverName) {
+        const dateInput = document.getElementById('earth_date');
+        const rover = this.rovers.find(r => r.name.toLowerCase() === roverName.toLowerCase());
+        dateInput.value = '';
+        if (rover) {
+            console.log(rover);
+            dateInput.min = rover.landing_date;
+            dateInput.max = rover.status === 'active' ? Utils.getTodayDate() : rover.max_date;
+        }
+    }
+    
     setupEventListeners() {
         document.getElementById('rover').addEventListener('change', (e) => {
             const selectedRover = e.target.value;
             if (selectedRover) {
                 this.updateCameraOptions(selectedRover);
+                this.updateDateConstraints(selectedRover);
             } else {
                 document.getElementById('camera').innerHTML = '<option value="">Todas las cámaras</option>';
             }
@@ -215,7 +227,16 @@ class UIManager {
         card.addEventListener('click', () => this.openModal(photo));
         
         card.innerHTML = `
-            <img src="${photo.img_src}" alt="Mars photo ${photo.id}" loading="lazy">
+            <div class="photo-container">
+                <img src="${photo.img_src}" alt="Mars photo ${photo.id}" loading="lazy">
+                <div class="image-placeholder hidden">
+                    <div class="placeholder-content">
+                        <i class="fas fa-image"></i>
+                        <p>Imagen no disponible</p>
+                        <small>Foto #${photo.id}</small>
+                    </div>
+                </div>
+            </div>
             <div class="photo-info">
                 <h3>Foto #${photo.id}</h3>
                 <div class="photo-details">
@@ -234,6 +255,18 @@ class UIManager {
                 </div>
             </div>
         `;
+        
+        const img = card.querySelector('img');
+        const placeholder = card.querySelector('.image-placeholder');
+        
+        img.addEventListener('error', () => {
+            img.style.display = 'none';
+            placeholder.classList.remove('hidden');
+        });
+        
+        img.addEventListener('load', () => {
+            placeholder.classList.add('hidden');
+        });
         
         return card;
     }
